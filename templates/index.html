@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Assignment: Leads & Clients Friends 2018 10 09 Cheung A</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+    window.onload = function () {
+
+        var options = {
+            title: {
+                text: "Customers and Number of New Leads"
+            },
+            subtitles: [{
+                text: "As of the Future"
+            }],
+            animationEnabled: true,
+            data: [{
+                type: "pie",
+                startAngle: 40,
+                toolTipContent: "<b>{label}</b>: {y}",
+                showInLegend: "true",
+                legendText: "{label}",
+                indexLabelFontSize: 16,
+                indexLabel: "{label} - {y}",
+                dataPoints: [
+                {% for i in range(loopcnt): %}
+                    { y: '{{front_report[i]['count']}}', label: '{{front_report[i]['customer_name']}}' },
+                {% endfor %}     
+                ]
+            }]
+        };
+        $("#chartContainer").CanvasJSChart(options);
+        }
+        </script>    
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <div class="well">
+                    <h2>List customers and leads</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Customer Name</th>
+                                <th>Sum of Leads</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in range(loopcnt): %}
+                            <tr>
+                                <td>
+                                    {{front_report[i]['customer_name']}}
+                                </td>
+                                <td>
+                                    {{front_report[i]['count']}}
+                                </td>
+                            </tr>
+                        {% endfor %}            
+                    </table>
+                </div>                        
+            </div>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>   
+</body>
+</html>
+
+
